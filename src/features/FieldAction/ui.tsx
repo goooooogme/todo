@@ -1,38 +1,37 @@
 import { Button, Field } from '@/shared';
-import React from 'react';
+import React, { FC } from 'react';
 import style from './style.module.scss';
-import { addTask, updateLabel, updateTask, useAppSelector } from '@/entities';
-import { useDispatch } from 'react-redux';
+import { addTask, updateLabel, updateTask, useAppSelector, useAppDispatch } from '@/entities';
 
-export function FieldAction() {
-    const dispatch = useDispatch();
+const BUTTON_TEXTS = {
+    ADD: '+ Add',
+    UPDATE: '+ Upd',
+} as const;
+
+export const FieldAction: FC = () => {
+    const dispatch = useAppDispatch();
     const { label, editId } = useAppSelector((state) => state.todo);
 
-    function handleUpdateLabel(label: string) {
-        dispatch(updateLabel(label));
-    }
+    const handleUpdateLabel = (newLabel: string) => {
+        dispatch(updateLabel(newLabel));
+    };
 
-    function handleAddTask() {
-        if (!label) return;
+    const handleAddTask = () => {
+        if (!label.trim()) return;
+
         if (editId) {
-            dispatch(updateTask({}))
+            dispatch(updateTask());
         } else {
-            dispatch(addTask({}));
+            dispatch(addTask());
         }
-    }
+    };
 
-    const textBtn = editId ? "+ Upd" : "+ Add"
+    const buttonText = editId ? BUTTON_TEXTS.UPDATE : BUTTON_TEXTS.ADD;
 
     return (
         <div className={style['field-action']}>
-            <Field
-                onChange={handleUpdateLabel}
-                value={label}
-            />
-            <Button 
-                text={textBtn}
-                onClick={handleAddTask} 
-            />
+            <Field onChange={handleUpdateLabel} value={label} />
+            <Button text={buttonText} onClick={handleAddTask} />
         </div>
-    )
-}
+    );
+};

@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import style from './style.module.scss';
 
-export function Field({
-    value,
-    onChange
-}) {
-    function handleChange(e) {
+interface FieldProps {
+    value: string;
+    onChange: (value: string) => void;
+    placeholder?: string;
+    id?: string;
+}
+
+export const Field: FC<FieldProps> = ({ 
+    value, 
+    onChange,
+    placeholder = 'Введите задачу',
+    id = 'new-task'
+}) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
-    }
+    };
 
     return (
-        <label htmlFor="new-task">
+        <label htmlFor={id}>
             <input
+                id={id}
                 type="text"
-                placeholder='Введите задачу'
+                placeholder={placeholder}
                 className={style.field}
                 onChange={handleChange}
                 value={value}
             />
         </label>
-    )
-}
+    );
+};

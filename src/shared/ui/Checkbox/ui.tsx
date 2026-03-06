@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import './style.css';
 
-export function Checkbox({
-    onChange,
-    value
-}) {
-    function handleChange(e) {
-        onChange(e.target.checked)
+interface CheckboxProps {
+    onChange: (checked: boolean) => void;
+    value: boolean;
+    id?: string;
+}
+
+export const Checkbox: FC<CheckboxProps> = ({ onChange, value, id }) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        onChange(e.target.checked);
     };
 
     return (
         <label className="checkbox-wrapper">
-            <input type="checkbox" checked={value} onChange={handleChange} />
+            <input 
+                id={id}
+                type="checkbox" 
+                checked={value} 
+                onChange={handleChange} 
+            />
             <div className="custom-checkbox"></div>
         </label>
-    )
-}
+    );
+};
