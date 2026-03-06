@@ -1,82 +1,85 @@
-import { EFilter, IInitialState } from '@/shared';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
+import { EFilter, IInitialState, ITask } from '@/shared';
 
 const initialState: IInitialState = {
-    filter: {
-        type: EFilter.ALL,
-    },
+    filter: { type: EFilter.ALL },
     tasks: [],
     label: '',
     editId: null,
-}
+};
 
 const todoSlice = createSlice({
-    initialState,
     name: 'todo',
+    initialState,
     reducers: {
         updateFilter: (state, action: PayloadAction<EFilter>) => {
-            state.filter = {
-                type: action.payload
-            }
-        },
-        addTask: (state, action) => {
-            state.tasks = [
-                ...state.tasks,
-                {
-                    label: state.label,
-                    isCompleted: false,
-                    id: new Date().getTime()
-                }
-            ];
-            state.label = '';
-        },
-        editTask: (state, action: PayloadAction<{ label: string, id: number }>) => {
-            state.label = action.payload.label;
-            state.editId = action.payload.id;
-            state.tasks = state.tasks.filter((item) => item.id !== action.payload.id);
-        },
-        removeTask: (state, action: PayloadAction<{ id: number }>) => {
-            state.tasks = state.tasks.filter((item) => item.id !== action.payload.id);
+            state.filter.type = action.payload;
         },
         updateLabel: (state, action: PayloadAction<string>) => {
             state.label = action.payload;
         },
-        updateCompleted: (state, action: PayloadAction<{ isCompleted: boolean; id: number }>) => {
-            state.tasks = state.tasks.map((item) => ({
-                ...item,
-                isCompleted: action.payload.id === item.id ? action.payload.isCompleted : item.isCompleted,
-            }))
-        },
-        updateTask: (state, action) => {
-            const tasks = [...state.tasks];
-
-            tasks.push({
-                id: state.editId,
+        addTask: (state) => {
+            if (!state.label.trim()) return;
+            const newTask: ITask = {
+                id: nanoid(),
                 label: state.label,
-                isCompleted: false
-            })
-
-            state.tasks = tasks;
+                isCompleted: false,
+            };
+            state.tasks.push(newTask);
+            state.label = '';
+        },
+        editTask: (state, action: PayloadAction<{ id: string }>) => {
+            const task = state.tasks.find((task) => task.id === action.payload.id);
+            if (!task) return;
+            state.editId = task.id;
+            state.label = task.label;
+        },
+        updateTask: (state) => {
+            if (!state.editId || !state.label.trim()) return;
+            const task = state.tasks.find((task: ITask) => task.id === state.editId);
+            if (task) {
+                task.label = state.label;
+            } else {
+                state.tasks.push({
+                    id: state.editId,
+                    label: state.label,
+                    isCompleted: false,
+                });
+            }
             state.editId = null;
             state.label = '';
         },
+        removeTask: (state, action: PayloadAction<{ id: string }>) => {
+            state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
+        },
+        updateCompleted: (state, action: PayloadAction<{ id: string; isCompleted: boolean }>) => {
+            const task = state.tasks.find((task) => task.id === action.payload.id);
+            if (task) task.isCompleted = action.payload.isCompleted;
+        },
         updateTasksPositions: (state, action: PayloadAction<{ sourceIndex: number; destinationIndex: number }>) => {
             const { sourceIndex, destinationIndex } = action.payload;
+            if (
+                sourceIndex < 0 || 
+                sourceIndex >= state.tasks.length || 
+                destinationIndex < 0 || 
+                destinationIndex >= state.tasks.length ||
+                sourceIndex === destinationIndex
+            ) return;
 
-            const [removed] = state.tasks.splice(sourceIndex, 1);
-            state.tasks.splice(destinationIndex, 0, removed);
-        }
-    }
-})
+            const [movedTask] = state.tasks.splice(sourceIndex, 1);
+            state.tasks.splice(destinationIndex, 0, movedTask);
+        },
+    },
+});
 
 export const {
     updateFilter,
-    addTask,
-    removeTask,
     updateLabel,
-    updateCompleted,
+    addTask,
     editTask,
     updateTask,
+    removeTask,
+    updateCompleted,
     updateTasksPositions,
 } = todoSlice.actions;
 

@@ -7,7 +7,7 @@ export enum EFilter {
 
 export interface ITask {
     label: string;
-    id: number;
+    id: string;
     isCompleted: boolean;
 }
 
@@ -19,5 +19,5 @@ export interface IInitialState {
     filter: IFilter;
     tasks: ITask[];
     label: string;
-    editId: number | null;
+    editId: string | null;
 }
