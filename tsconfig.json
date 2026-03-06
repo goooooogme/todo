@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "declarationDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@layout/*": ["src/layout/*"],
+      "@pages/*": ["src/pages/*"],
+      "@types/*": ["src/types/*"],
+      "react/*": ["node_modules/react/*"],
+      "redux/*": ["node_modules/redux/*"]
+    }
+  },
+  "include": ["src/*", "src/**/*"],
+  "exclude": ["src/*.test*", "src/**/*.test*"]
+}

@@ -1,0 +1,14 @@
+.field {
+    padding: 15px 25px;
+    background: #364153;
+    outline: none;
+    border: 1px solid #4A5565;
+    border-radius: 12px;
+    color: #A9A9A9;
+    width: 509px;
+    font-size: 16px;
+
+    ::placeholder {
+        color: #A9A9A9;
+    }
+}

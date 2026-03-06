@@ -1,0 +1,37 @@
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+html {
+    height: 100%;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: #101828;
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+#root {
+    height: 100%;
+}
+
+/* Chrome, Safari, Edge */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type="date"] {
+    -moz-appearance: textfield;
+}
+
+/* Убираем и стрелочки, если они есть */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+    display: none;
+}

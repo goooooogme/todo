@@ -1,0 +1,12 @@
+@use './reset';
+
+html,
+body,
+#root {
+    height: 100%;
+    background: #101828;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
