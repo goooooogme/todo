@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
-import { EFilter, IInitialState, ITask } from '@/shared';
+import type { PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
+import type { IInitialState, ITask } from '@/shared';
+import { EFilter } from '@/shared';
 
 const initialState: IInitialState = {
     filter: { type: EFilter.ALL },
@@ -29,16 +31,16 @@ const todoSlice = createSlice({
             state.label = '';
         },
         editTask: (state, action: PayloadAction<{ id: string }>) => {
-            const task = state.tasks.find((task) => task.id === action.payload.id);
-            if (!task) return;
-            state.editId = task.id;
-            state.label = task.label;
+            const foundTask = state.tasks.find((t) => t.id === action.payload.id);
+            if (!foundTask) return;
+            state.editId = foundTask.id;
+            state.label = foundTask.label;
         },
         updateTask: (state) => {
             if (!state.editId || !state.label.trim()) return;
-            const task = state.tasks.find((task: ITask) => task.id === state.editId);
-            if (task) {
-                task.label = state.label;
+            const foundTask = state.tasks.find((t: ITask) => t.id === state.editId);
+            if (foundTask) {
+                foundTask.label = state.label;
             } else {
                 state.tasks.push({
                     id: state.editId,
@@ -50,11 +52,11 @@ const todoSlice = createSlice({
             state.label = '';
         },
         removeTask: (state, action: PayloadAction<{ id: string }>) => {
-            state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
+            state.tasks = state.tasks.filter((t) => t.id !== action.payload.id);
         },
         updateCompleted: (state, action: PayloadAction<{ id: string; isCompleted: boolean }>) => {
-            const task = state.tasks.find((task) => task.id === action.payload.id);
-            if (task) task.isCompleted = action.payload.isCompleted;
+            const foundTask = state.tasks.find((t) => t.id === action.payload.id);
+            if (foundTask) foundTask.isCompleted = action.payload.isCompleted;
         },
         updateTasksPositions: (state, action: PayloadAction<{ sourceIndex: number; destinationIndex: number }>) => {
             const { sourceIndex, destinationIndex } = action.payload;

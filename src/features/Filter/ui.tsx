@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import style from './style.module.scss';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector, updateFilter } from '@/entities';
@@ -48,7 +49,7 @@ export const Filter: FC = () => {
                         {item.label}
                     </div>
                     {index < FILTERS.length - 1 && (
-                        <div className={clsx(style.filter__param, style['filter__param__separator'])}>
+                        <div className={clsx(style.filter__param, style.filter__param__separator)}>
                             |
                         </div>
                     )}

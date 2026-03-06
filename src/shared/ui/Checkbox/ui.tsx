@@ -1,4 +1,5 @@
-import React, { FC, ChangeEvent } from 'react';
+import type { FC, ChangeEvent } from 'react';
+import React from 'react';
 import './style.css';
 
 interface CheckboxProps {
@@ -20,7 +21,7 @@ export const Checkbox: FC<CheckboxProps> = ({ onChange, value, id }) => {
                 checked={value} 
                 onChange={handleChange} 
             />
-            <div className="custom-checkbox"></div>
+            <div className="custom-checkbox" />
         </label>
     );
 };

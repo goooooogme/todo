@@ -1,8 +1,10 @@
 import { FieldAction, Filter, Task } from '@/features';
-import React, { FC, useMemo } from 'react';
+import type { FC} from 'react';
+import React, { useMemo } from 'react';
 import style from './style.module.scss';
 import { useAppSelector, useAppDispatch, updateTasksPositions } from '@/entities';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import type { DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { filterTasks } from '@/shared';
 
 export const ToDo: FC = () => {
@@ -50,13 +52,13 @@ export const ToDo: FC = () => {
                                     draggableId={String(item.id)}
                                     index={index}
                                 >
-                                    {(provided) => (
+                                    {(providedDrag) => (
                                         <div
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
+                                            ref={providedDrag.innerRef}
+                                            {...providedDrag.draggableProps}
+                                            {...providedDrag.dragHandleProps}
                                             style={{
-                                                ...provided.draggableProps.style,
+                                                ...providedDrag.draggableProps.style,
                                             }}
                                         >
                                             <Task {...item} />

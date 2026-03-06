@@ -1,4 +1,5 @@
-import React, { FC, ChangeEvent } from 'react';
+import type { FC, ChangeEvent } from 'react';
+import React from 'react';
 import style from './style.module.scss';
 
 interface FieldProps {

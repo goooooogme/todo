@@ -1,8 +1,9 @@
 import { Checkbox, EditIcon, RemoveIcon } from '@/shared';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import style from './style.module.scss';
 import { useAppDispatch, editTask, removeTask, updateCompleted } from '@/entities';
-import { ITask } from '@/shared';
+import type { ITask } from '@/shared';
 import clsx from 'clsx';
 
 export const Task: FC<ITask> = ({ label, id, isCompleted }) => {

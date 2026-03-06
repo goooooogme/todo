@@ -1,5 +1,6 @@
 import { Button, Field } from '@/shared';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import style from './style.module.scss';
 import { addTask, updateLabel, updateTask, useAppSelector, useAppDispatch } from '@/entities';
 

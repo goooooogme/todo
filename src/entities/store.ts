@@ -2,7 +2,8 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // localStorage для web
 import todoSlice from './todo/todoSlice';
-import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
+import type { TypedUseSelectorHook} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const rootReducer = combineReducers({
   todo: todoSlice,

@@ -1,4 +1,4 @@
-import { ITask } from '../types';
+import type { ITask } from '../types';
 import { EFilter } from '../types';
 
 export const filterTasks = (tasks: ITask[], filterType: EFilter): ITask[] => {
